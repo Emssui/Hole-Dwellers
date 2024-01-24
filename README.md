@@ -11,6 +11,8 @@ Tunnel Dwellers:
   - Assets : https://assetstore.unity.com/packages/2d/environments/pixel-fantasy-caves-152375
   - Possibly PLAYER CUSTOMISATION
 
+CREDITS:
+  - Font: Hewett Tsoi
 
 
 https://discord.gg/MpRBJA66Uw
