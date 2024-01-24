@@ -8,7 +8,9 @@ Tunnel Dwellers:
   - Npc's
   - Combat
   - Sprint
-  - Assets : https://assetstore.unity.com/packages/2d/environments/pixel-fantasy-caves-152375
+  - Assets :
+  -   https://assetstore.unity.com/packages/2d/environments/pixel-fantasy-caves-152375
+  -   https://assetstore.unity.com/packages/2d/environments/pixel-art-platformer-village-props-166114
   - Possibly PLAYER CUSTOMISATION
 
 CREDITS:
