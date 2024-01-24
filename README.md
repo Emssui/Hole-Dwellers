@@ -12,7 +12,7 @@ Tunnel Dwellers:
   - Possibly PLAYER CUSTOMISATION
 
 CREDITS:
-  - Font: Hewett Tsoi
+  - Font: Hewett Tsoi https://www.dafont.com/alagard.font
 
 
 https://discord.gg/MpRBJA66Uw
