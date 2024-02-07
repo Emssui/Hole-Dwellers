@@ -3,17 +3,28 @@ using System.Collections.Generic;
 using System.Transactions;
 using UnityEditor.Callbacks;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
     public CharacterController2D controller;
 
+    // Basic movement variables
     public float runSpeed = 40f;
     public Animator animator;
     float horizontalMove = 0f;
     bool jump = false;
     bool crouch = false;
 
+    // Health variables
+    public GameObject Blood;
+    private int healthPoints = 3;
+    private bool isAlive = true;
+    private bool waitTime = false;
+    public Text Lives;
+
+
+    // Dashing variables
     private bool canDash = true;
     private bool isDashing;
     private float dashingPower = 100f;
@@ -25,16 +36,15 @@ public class PlayerMovement : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    {        
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
-
         animator.SetFloat("speed", Mathf.Abs(horizontalMove));
 
         if(isDashing) {
             return;
         }
 
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             jump = true;
         }
@@ -49,6 +59,10 @@ public class PlayerMovement : MonoBehaviour
         if( Input.GetKeyDown(KeyCode.LeftShift) && canDash) {
             StartCoroutine(Dash());
         }
+
+        DestroyObjectWithTag();
+        Lives.text = "Health: " + healthPoints.ToString() + "/3";
+
     }
 
     void FixedUpdate ()
@@ -56,6 +70,20 @@ public class PlayerMovement : MonoBehaviour
         controller.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump);
         jump = false;
         crouch = false;
+    }
+
+    private void DestroyObjectWithTag() {
+        GameObject targetObject1 = GameObject.FindWithTag("Health1");
+        GameObject targetObject2 = GameObject.FindWithTag("Health2");
+        GameObject targetObject3 = GameObject.FindWithTag("Health3");
+
+        if (healthPoints == 2){
+            Destroy(targetObject1);
+        } else if(healthPoints == 1) {
+            Destroy(targetObject2);
+        } else if(healthPoints == 0) {
+            Destroy(targetObject3);
+        }
     }
 
     private IEnumerator Dash() {
@@ -71,5 +99,37 @@ public class PlayerMovement : MonoBehaviour
         isDashing = false;
         yield return new WaitForSeconds(dashingcooldown);
         canDash = true;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.CompareTag("Enemies") && healthPoints > 0 && !waitTime) {
+            healthPoints -= 1;
+            Debug.Log("Current Health: " + healthPoints);
+            waitTime = true;
+            StartCoroutine(WaitForThreeSeconds());            
+        } else if (collision.CompareTag("Enemies") && healthPoints == 0) {
+            isAlive = false;
+            Debug.Log(isAlive);
+
+            // Get a reference to the GameManager
+            GameManager gameManager = FindAnyObjectByType<GameManager>();
+
+            // Restart game after delay.
+            gameManager.GameOver();
+
+            // Particles for death
+            Instantiate(Blood, transform.position, Quaternion.identity);
+
+            // Destroy the player.
+            Destroy(gameObject);
+        }
+    }
+
+    private IEnumerator WaitForThreeSeconds(){
+        // Wait for three seconds
+        yield return new WaitForSeconds(1f);
+
+        // Set waitTime back to false
+        waitTime = false;
     }
 }
