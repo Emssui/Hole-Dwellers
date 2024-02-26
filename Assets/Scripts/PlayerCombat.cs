@@ -17,23 +17,27 @@ public class PlayerCombat : MonoBehaviour
     public int attackDamage = 20;
     void Update()
     {
-        if (Time.time >= nextAttackTime && Input.GetKeyDown(KeyCode.Mouse0)) {
+        if (Time.time >= nextAttackTime && Input.GetKeyDown(KeyCode.Mouse0))
+        {
             Attack();
             nextAttackTime = Time.time + attackCooldown; // Set the next attack time
         }
     }
 
-    void Attack() {
+    void Attack()
+    {
         animator.SetTrigger("Attack");
 
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackRange.position, attackPoint, enemyLayers);
 
-        foreach(Collider2D enemy in hitEnemies) {
+        foreach (Collider2D enemy in hitEnemies)
+        {
             enemy.GetComponent<Enemies>().TakeDamage(attackDamage);
         }
     }
 
-    void OnDrawGizmosSelected() {
+    void OnDrawGizmosSelected()
+    {
         if (attackRange == null)
             return;
 

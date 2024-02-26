@@ -36,11 +36,12 @@ public class PlayerMovement : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {        
+    {
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
         animator.SetFloat("speed", Mathf.Abs(horizontalMove));
 
-        if(isDashing) {
+        if (isDashing)
+        {
             return;
         }
 
@@ -51,12 +52,14 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Crouch"))
         {
             crouch = true;
-        } else if (Input.GetButtonUp("Crouch"))
+        }
+        else if (Input.GetButtonUp("Crouch"))
         {
             crouch = false;
         }
 
-        if( Input.GetKeyDown(KeyCode.LeftShift) && canDash) {
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+        {
             StartCoroutine(Dash());
         }
 
@@ -65,28 +68,35 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    void FixedUpdate ()
+    void FixedUpdate()
     {   // Move our character
         controller.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump);
         jump = false;
         crouch = false;
     }
 
-    private void DestroyObjectWithTag() {
+    private void DestroyObjectWithTag()
+    {
         GameObject targetObject1 = GameObject.FindWithTag("Health1");
         GameObject targetObject2 = GameObject.FindWithTag("Health2");
         GameObject targetObject3 = GameObject.FindWithTag("Health3");
 
-        if (healthPoints == 2){
+        if (healthPoints == 2)
+        {
             Destroy(targetObject1);
-        } else if(healthPoints == 1) {
+        }
+        else if (healthPoints == 1)
+        {
             Destroy(targetObject2);
-        } else if(healthPoints == 0) {
+        }
+        else if (healthPoints == 0)
+        {
             Destroy(targetObject3);
         }
     }
 
-    private IEnumerator Dash() {
+    private IEnumerator Dash()
+    {
         canDash = false;
         isDashing = true;
         float originalGravity = rb.gravityScale;
@@ -101,13 +111,17 @@ public class PlayerMovement : MonoBehaviour
         canDash = true;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.CompareTag("Enemies") && healthPoints > 0 && !waitTime) {
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemies") && healthPoints > 0 && !waitTime)
+        {
             healthPoints -= 1;
             Debug.Log("Current Health: " + healthPoints);
             waitTime = true;
-            StartCoroutine(WaitForThreeSeconds());            
-        } else if (collision.CompareTag("Enemies") && healthPoints == 0) {
+            StartCoroutine(WaitForThreeSeconds());
+        }
+        else if (collision.CompareTag("Enemies") && healthPoints == 0)
+        {
             isAlive = false;
             Debug.Log(isAlive);
 
@@ -125,9 +139,10 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private IEnumerator WaitForThreeSeconds(){
+    private IEnumerator WaitForThreeSeconds()
+    {
         // Wait for three seconds
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
 
         // Set waitTime back to false
         waitTime = false;
