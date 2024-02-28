@@ -5,9 +5,7 @@ Tunnel Dwellers:
   - Scene 2 Game
   - Scene 3 Ending
   - Double jump
-  - Npc's
   - Combat
-  - Sprint
   - Assets :
   -   https://assetstore.unity.com/packages/2d/environments/pixel-fantasy-caves-152375
   -   https://assetstore.unity.com/packages/2d/gui/icons/clean-vector-icons-132084
@@ -16,8 +14,10 @@ Tunnel Dwellers:
   -   https://assetstore.unity.com/packages/2d/characters/warped-caves-103250
   - Possibly PLAYER CUSTOMISATION
 
+TODO
+  - Make hearts come back
+  - Attack anima
+  - PowerUps
+
 CREDITS:
   - Font: Hewett Tsoi https://www.dafont.com/alagard.font
-
-
-https://discord.gg/MpRBJA66Uw
