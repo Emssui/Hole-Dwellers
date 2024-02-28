@@ -21,6 +21,3 @@ TODO
 
 CREDITS:
   - Font: Hewett Tsoi https://www.dafont.com/alagard.font
-
-
-https://discord.gg/MpRBJA66Uw
