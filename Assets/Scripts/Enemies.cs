@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Pathfinding;
-using UnityEditor.Callbacks;
 using UnityEngine;
 using UnityEngine.Animations;
 
@@ -13,11 +12,14 @@ public class Enemies : MonoBehaviour
     public GameObject player;
     public Animator anim;
     public Animator animator;
+    public string playerName = "Player";
     public bool flip;
+
     void Start()
     {
         currentHealth = maxHealth;
         anim = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
         anim.SetBool("isMoving", true);
     }
 
@@ -47,23 +49,33 @@ public class Enemies : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         // Check if the collider that entered the trigger is the player or any other target
-        if (other.CompareTag("Player"))
+        if (other.gameObject.name == playerName)
         {
-            Debug.Log("ATATTA");
+        
             // Set the "Attack" trigger to play the attack animation
-            anim.SetTrigger("attack");
+            animator.SetTrigger("attack");
+        }
+        else
+        {
+            Debug.Log("Player TAG does not exist");
         }
     }
 
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+        // GetComponent<SpriteRenderer>().color = Color.red;
+        // Invoke("ResetColor", 0.05f);
 
         if (currentHealth <= 0)
         {
             Die();
         }
     }
+
+    // void ResetColor(){
+    //     GetComponent<SpriteRenderer>().color = Color.white;
+    // }
 
     void Die()
     {

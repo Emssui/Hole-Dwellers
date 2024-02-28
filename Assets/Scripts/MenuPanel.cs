@@ -28,6 +28,16 @@ public class ButtonController : MonoBehaviour
     //     myButton.gameObject.SetActive(!myButton.gameObject.activeSelf);
     // }
 
+    public void ToggleVisibility() {
+        if(!myButton.gameObject.activeSelf) {
+            Time.timeScale = 0;
+            myButton.gameObject.SetActive(true);
+        } else {
+            Time.timeScale = 1;
+            myButton.gameObject.SetActive(false);
+        }
+    }
+
      public void QuitGame()
     {
         Application.Quit();

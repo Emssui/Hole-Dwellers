@@ -4,48 +4,39 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour {
 
-	#region Singleton
+    #region Singleton
+    
+    public static Inventory instance;
+    
+    void Awake ()
+    {
+        instance = this;
+    }
+    
+    #endregion
+    
+    public delegate void OnItemChanged();
+    public OnItemChanged onItemChangedCallback;
 
-	public static Inventory instance;
+    // Reference to the inventory UI GameObject
+    public GameObject inventoryUI;
 
-	void Awake ()
-	{
-		instance = this;
-	}
-
-	#endregion
-
-	public delegate void OnItemChanged();
-	public OnItemChanged onItemChangedCallback;
-
-	// public int space = 10;	// Amount of item spaces
-
-	// // Our current list of items in the inventory
-	// public List<Item> items = new List<Item>();
-
-	// // Add a new item if enough room
-	// public void Add (Item item)
-	// {
-	// 	if (item.showInInventory) {
-	// 		if (items.Count >= space) {
-	// 			Debug.Log ("Not enough room.");
-	// 			return;
-	// 		}
-
-	// 		items.Add (item);
-
-	// 		if (onItemChangedCallback != null)
-	// 			onItemChangedCallback.Invoke ();
-	// 	}
-	// }
-
-	// // Remove an item
-	// public void Remove (Item item)
-	// {
-	// 	items.Remove(item);
-
-	// 	if (onItemChangedCallback != null)
-	// 		onItemChangedCallback.Invoke();
-	// }
-
+    // Toggle inventory UI visibility
+    public void ToggleInventory()
+    {
+        inventoryUI.SetActive(!inventoryUI.activeSelf);
+        // Check if the inventory UI is active, then activate the GameObject with the "Inventory" tag
+        if (inventoryUI.activeSelf)
+        {
+            GameObject inventoryObject = GameObject.FindGameObjectWithTag("Inventory");
+            if (inventoryObject != null)
+            {
+                inventoryObject.SetActive(true);
+            }
+            else
+            {
+                Debug.LogWarning("No GameObject with tag 'Inventory' found!");
+            }
+        }
+    }
 }

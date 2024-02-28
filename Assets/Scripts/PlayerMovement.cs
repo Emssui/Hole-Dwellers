@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Transactions;
-using UnityEditor.Callbacks;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -33,6 +33,10 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private TrailRenderer tr;
+
+    // HEARTS 
+    public GameObject Heart2;
+    public GameObject Heart3;
 
     // Update is called once per frame
     void Update()
@@ -83,15 +87,18 @@ public class PlayerMovement : MonoBehaviour
 
         if (healthPoints == 2)
         {
-            Destroy(targetObject1);
+            if (targetObject1 != null)
+                targetObject1.SetActive(false);
         }
         else if (healthPoints == 1)
         {
-            Destroy(targetObject2);
+            if (targetObject2 != null)
+                targetObject2.SetActive(false);
         }
         else if (healthPoints == 0)
         {
-            Destroy(targetObject3);
+            if (targetObject3 != null)
+                targetObject3.SetActive(false);
         }
     }
 
@@ -120,7 +127,7 @@ public class PlayerMovement : MonoBehaviour
             waitTime = true;
             StartCoroutine(WaitForThreeSeconds());
         }
-        else if (collision.CompareTag("Enemies") && healthPoints == 0)
+        else if (healthPoints <= 0)
         {
             isAlive = false;
             Debug.Log(isAlive);
@@ -136,6 +143,25 @@ public class PlayerMovement : MonoBehaviour
 
             // Destroy the player.
             Destroy(gameObject);
+        }
+
+        if (collision.CompareTag("Potion") && healthPoints < 3)
+        {
+            healthPoints++;
+            Destroy(collision.gameObject);
+
+            if (healthPoints == 3)
+            {
+                Heart3.SetActive(true);
+            }
+            else if (healthPoints == 2)
+            {
+                Heart2.SetActive(true);
+            }
+        }
+        else
+        {
+            Debug.Log("Health is full");
         }
     }
 
