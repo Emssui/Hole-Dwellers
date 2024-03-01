@@ -30,6 +30,8 @@ public class CharacterController2D : MonoBehaviour
 	public BoolEvent OnCrouchEvent;
 	private bool m_wasCrouching = false;
 
+	public GameObject skill1;
+
 	private void Awake()
 	{
 		m_Rigidbody2D = GetComponent<Rigidbody2D>();
@@ -136,6 +138,8 @@ public class CharacterController2D : MonoBehaviour
 		if(collision.gameObject.CompareTag("DoubleJump")) {
 			m_JumpForce += 200; 
 			Destroy(collision.gameObject);
+			skill1.SetActive(true);
+
 		}
 	}
 

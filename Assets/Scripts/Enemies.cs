@@ -1,19 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
-using Pathfinding;
 using UnityEngine;
-using UnityEngine.Animations;
 
 public class Enemies : MonoBehaviour
 {
-    public GameObject Blood;
     public int maxHealth = 100;
     int currentHealth;
+    public GameObject Blood;
     public GameObject player;
     public Animator anim;
     public Animator animator;
     public string playerName = "Player";
     public bool flip;
+
+    // Knockback variables
+    public float knockbackForce = 100f;
+    public float knockbackDuration = 0.1f;
 
     void Start()
     {
@@ -48,12 +50,14 @@ public class Enemies : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        // Check if the collider that entered the trigger is the player or any other target
-        if (other.gameObject.name == playerName)
+        // Check if the collider that entered the trigger is the player
+        if (other.CompareTag("Player"))
         {
-        
             // Set the "Attack" trigger to play the attack animation
             animator.SetTrigger("attack");
+
+            // Apply knockback to the player
+            StartCoroutine(Knockback(other.gameObject.GetComponent<Rigidbody>()));
         }
         else
         {
@@ -64,8 +68,6 @@ public class Enemies : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-        // GetComponent<SpriteRenderer>().color = Color.red;
-        // Invoke("ResetColor", 0.05f);
 
         if (currentHealth <= 0)
         {
@@ -73,9 +75,20 @@ public class Enemies : MonoBehaviour
         }
     }
 
-    // void ResetColor(){
-    //     GetComponent<SpriteRenderer>().color = Color.white;
-    // }
+    IEnumerator Knockback(Rigidbody playerRigidbody)
+    {
+        // Calculate knockback direction
+        Vector3 knockbackDirection = (player.transform.position - transform.position).normalized;
+
+        // Apply knockback force
+        playerRigidbody.AddForce(knockbackDirection * knockbackForce, ForceMode.Impulse);
+
+        // Wait for knockback duration
+        yield return new WaitForSeconds(knockbackDuration);
+
+        // Reset velocity
+        playerRigidbody.velocity = Vector3.zero;
+    }
 
     void Die()
     {
