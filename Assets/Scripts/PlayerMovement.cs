@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Transactions;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
@@ -29,14 +30,17 @@ public class PlayerMovement : MonoBehaviour
     private bool isDashing;
     private float dashingPower = 100f;
     private float dashingTime = 0.2f;
-    private float dashingcooldown = 2f;
+    private float dashingcooldown = 1f;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private TrailRenderer tr;
 
-    // HEARTS 
+    // Hearts
     public GameObject Heart2;
     public GameObject Heart3;
+
+    // Power Up
+    public GameObject doubleJump;
 
     // Update is called once per frame
     void Update()
@@ -162,6 +166,12 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             Debug.Log("Health is full");
+        }
+
+        if (collision.CompareTag("Lava"))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            Destroy(gameObject);
         }
     }
 

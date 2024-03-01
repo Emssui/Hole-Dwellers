@@ -132,6 +132,12 @@ public class CharacterController2D : MonoBehaviour
 		}
 	}
 
+	void OnTriggerEnter2D(Collider2D collision) {
+		if(collision.gameObject.CompareTag("DoubleJump")) {
+			m_JumpForce += 200; 
+			Destroy(collision.gameObject);
+		}
+	}
 
 	private void Flip()
 	{
