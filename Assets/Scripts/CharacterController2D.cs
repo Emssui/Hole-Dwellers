@@ -29,8 +29,9 @@ public class CharacterController2D : MonoBehaviour
 
 	public BoolEvent OnCrouchEvent;
 	private bool m_wasCrouching = false;
-
 	public GameObject skill1;
+	public GameObject Ach;
+
 
 	private void Awake()
 	{
@@ -61,7 +62,6 @@ public class CharacterController2D : MonoBehaviour
 			}
 		}
 	}
-
 
 	public void Move(float move, bool crouch, bool jump)
 	{
@@ -140,6 +140,15 @@ public class CharacterController2D : MonoBehaviour
 			Destroy(collision.gameObject);
 			skill1.SetActive(true);
 
+		}
+
+		if(collision.gameObject.CompareTag("Ach")){
+			Destroy(collision.gameObject);
+			Ach.SetActive(true);
+		}
+
+		if(collision.gameObject.CompareTag("Lava")){
+			m_JumpForce = 400; 
 		}
 	}
 

@@ -8,13 +8,15 @@ public class Enemies : MonoBehaviour
     int currentHealth;
     public GameObject Blood;
     public GameObject player;
+    public Transform Enemy;
     public Animator anim;
     public Animator animator;
     public string playerName = "Player";
     public bool flip;
 
+
     // Knockback variables
-    public float knockbackForce = 100f;
+    public int knockbackForce = 6;
     public float knockbackDuration = 0.1f;
 
     void Start()
@@ -57,7 +59,6 @@ public class Enemies : MonoBehaviour
             animator.SetTrigger("attack");
 
             // Apply knockback to the player
-            StartCoroutine(Knockback(other.gameObject.GetComponent<Rigidbody>()));
         }
         else
         {
@@ -68,6 +69,8 @@ public class Enemies : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+        // StartCoroutine(Knockback(gameObject.GetComponent<Rigidbody>()));
+
 
         if (currentHealth <= 0)
         {
@@ -75,20 +78,20 @@ public class Enemies : MonoBehaviour
         }
     }
 
-    IEnumerator Knockback(Rigidbody playerRigidbody)
-    {
-        // Calculate knockback direction
-        Vector3 knockbackDirection = (player.transform.position - transform.position).normalized;
+    // IEnumerator Knockback(Rigidbody playerRigidbody)
+    // {
+    //     // Calculate knockback direction
+    //     Vector3 knockbackDirection = (player.transform.position - transform.position).normalized;
 
-        // Apply knockback force
-        playerRigidbody.AddForce(knockbackDirection * knockbackForce, ForceMode.Impulse);
+    //     // Apply knockback force
+    //     playerRigidbody.AddForce(knockbackDirection * knockbackForce, ForceMode.Impulse);
 
-        // Wait for knockback duration
-        yield return new WaitForSeconds(knockbackDuration);
+    //     // Wait for knockback duration
+    //     yield return new WaitForSeconds(knockbackDuration);
 
-        // Reset velocity
-        playerRigidbody.velocity = Vector3.zero;
-    }
+    //     // Reset velocity
+    //     playerRigidbody.velocity = Vector3.zero;
+    // }
 
     void Die()
     {
