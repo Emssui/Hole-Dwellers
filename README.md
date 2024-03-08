@@ -1,5 +1,3 @@
-LEONARDODAPEPE DID NOT COMMIT ANYTHING OF IMPORTANCE
-
 Hole Dwellers:
 
   - Scene 0 menu
@@ -10,6 +8,11 @@ Hole Dwellers:
   - Scene 5 Act3
   - Scene 6 End Credits
 
+HOW TO RUN GAME:
+- Download as zip file
+- Extract the zip file
+- go into Game folder
+- Run Tunnel Dweller.exe
 
 CREDITS:
   - Font: Hewett Tsoi https://www.dafont.com/alagard.font
