@@ -1,17 +1,30 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class SceneTriggerChange : MonoBehaviour
 {
     public GameObject TutText;
+    public Image fadeImage;
+    public float fadeDuration = 1.0f; // Duration of the fade-out effect
     private bool playerInsideTrigger = false;
+
+    void Start()
+    {
+        // Ensure that the fade image is initialized properly
+        if (fadeImage != null)
+        {
+            fadeImage.color = Color.clear;
+        }
+    }
 
     void Update()
     {
         // Check if player is inside the trigger and presses the "E" key
         if (playerInsideTrigger && Input.GetKeyDown(KeyCode.E))
         {
-            LoadNextScene();
+            StartCoroutine(FadeOutAndLoadNextScene());
         }
     }
 
@@ -24,12 +37,22 @@ public class SceneTriggerChange : MonoBehaviour
         }
     }
 
-    void LoadNextScene()
+    IEnumerator FadeOutAndLoadNextScene()
     {
-        // Get the current scene build index
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        // Start fading out
+        float startTime = Time.time;
+        Color initialColor = fadeImage.color;
+        Color targetColor = Color.black;
 
-        // Load the next scene by incrementing the current scene build index
+        while (Time.time - startTime < fadeDuration)
+        {
+            float alpha = Mathf.Lerp(0, 1, (Time.time - startTime) / fadeDuration);
+            fadeImage.color = Color.Lerp(initialColor, targetColor, alpha);
+            yield return null;
+        }
+
+        // Load the next scene
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         int nextSceneIndex = (currentSceneIndex + 1) % SceneManager.sceneCountInBuildSettings;
         SceneManager.LoadScene(nextSceneIndex);
     }

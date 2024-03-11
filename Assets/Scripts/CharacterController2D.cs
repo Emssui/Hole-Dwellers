@@ -33,6 +33,11 @@ public class CharacterController2D : MonoBehaviour
 	public GameObject Ach;
 
 
+	void Start()
+	{
+		m_JumpForce = 600f;
+	}
+
 	private void Awake()
 	{
 		m_Rigidbody2D = GetComponent<Rigidbody2D>();
@@ -139,7 +144,7 @@ public class CharacterController2D : MonoBehaviour
 	{
 		if (collision.gameObject.CompareTag("DoubleJump"))
 		{
-			m_JumpForce += 200;
+			m_JumpForce += 200f;
 			Destroy(collision.gameObject);
 			skill1.SetActive(true);
 
@@ -149,11 +154,6 @@ public class CharacterController2D : MonoBehaviour
 		{
 			Destroy(collision.gameObject);
 			Ach.SetActive(true);
-		}
-
-		if (collision.gameObject.CompareTag("Lava"))
-		{
-			m_JumpForce = 400;
 		}
 	}
 
