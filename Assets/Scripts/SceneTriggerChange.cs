@@ -5,7 +5,8 @@ using System.Collections;
 
 public class SceneTriggerChange : MonoBehaviour
 {
-    public GameObject TutText;
+    public GameObject tutText;
+    public GameObject faded;
     public Image fadeImage;
     public float fadeDuration = 1.0f; // Duration of the fade-out effect
     private bool playerInsideTrigger = false;
@@ -32,7 +33,8 @@ public class SceneTriggerChange : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            TutText.SetActive(true);
+            faded.SetActive(true);
+            tutText.SetActive(true);
             playerInsideTrigger = true;
         }
     }
